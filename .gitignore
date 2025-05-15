@@ -5,15 +5,16 @@ out/
 
 ### Eclipse ###
 .apt_generated
-.classpath
 .factorypath
-.project
 .settings
 .springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+
+# Default ignored files
+/shelf/
+/workspace.xml
+# Environment-dependent path to Maven home directory
+/mavenHomeManager.xml
+
 
 ### NetBeans ###
 /nbproject/private/
