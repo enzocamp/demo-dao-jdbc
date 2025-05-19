@@ -1,10 +1,10 @@
 package application;
 
-import model.entities.Department;
 
-import java.time.LocalDate;
-import java.util.Date;
+import model.dao.SellerDao;
 import model.entities.Seller;
+import model.dao.DaoFactory;
+
 
 public class Program {
 
