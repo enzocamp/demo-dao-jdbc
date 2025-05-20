@@ -40,34 +40,31 @@ public class SellerDaoJDBC implements SellerDao {
 
             int rowsAffected = st.executeUpdate();
 
-            if (rowsAffected > 0){
+            if (rowsAffected > 0) {
                 ResultSet rs = st.getGeneratedKeys();
-                if(rs.next()){
+                if (rs.next()) {
                     int id = rs.getInt(1);
                     obj.setId(id);
                 }
                 DB.closeResultSet(rs);
-            }
-            else{
+            } else {
                 throw new DbException("Unexpected error! No rows affected");
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        }
-        finally {
+        } finally {
             DB.closeStatement(st);
         }
     }
 
     @Override
     public void update(Seller obj) {
-       PreparedStatement st = null;
+        PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
                     "UPDATE seller  \n" +
                             "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?  \n" +
-                            "WHERE Id = ?" );
+                            "WHERE Id = ?");
 
             st.setString(1, obj.getName());
             st.setString(2, obj.getEmail());
@@ -78,11 +75,9 @@ public class SellerDaoJDBC implements SellerDao {
 
             st.executeUpdate();
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        }
-        finally {
+        } finally {
             DB.closeStatement(st);
         }
 
@@ -90,7 +85,24 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void deleteById(Integer id) {
-        // TODO Auto-generated method stub
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM seller  \n" +
+                    "WHERE Id = ?");
+            st.setInt(1, id);
+
+            int rows = st.executeUpdate();
+            if(rows == 0){
+                throw new DbException("Id doesn't exist");
+            }
+
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally{
+            DB.closeStatement(st);
+        }
 
     }
 
